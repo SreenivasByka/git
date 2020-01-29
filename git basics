@@ -1,0 +1,134 @@
+Version control systems(vcs) are systems that allow us to contribute to and manage different releases and stages of a software product without actually having to keep multiple files or folders,development within a team more manageable and less of a pain as developers don’t have to be different folders
+2 types- Centralized and Distributed.Linus Torvalds(he also famous for linux) inveted git.
+GIT- Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency,modified, staged and committed terms or states.
+After installtion(instAll simple process)   then configure...
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+git --version
+git 2.4.2
+
+git status
+ all set up and ready let’s run a git status command first.
+
+git status
+
+git repository inside that folder which represents our working directory.
+
+2. git init
+In order to initialize Git, we will run the command git init
+
+git init
+
+start creating some changes to simulate a real-world project. I’m going to do so inside of visual studio code, you can pick any IDE/editor of your choice, they all have similar features, but VS code is my favorite. Let’s add some text to the file:
+
+Git status with untracked files
+
+ we have some content inside of the project in the modified state and that we haven’t added yet to the staging area.
+
+3. git add
+To add the files created and edited in the previous step to the staging area we will run the command: git add hello.txt
+
+Git status 
+showing files ready to be committed
+ you want to add the staging area, you can also run git add . which adds all files in the modifying area. 
+
+git commit -m “added hello.txt”  (-m message)
+Sample Commit Message
+ all the collaborators will be reading your commit messages, it’s important you learn how to write them succinctly: Git Commit Messages
+
+5. git push
+So everything works fine, but now if we want to share the project with a colleague and bring them on board we need to place our project somewhere on the cloud where other teammates can access it. We’re not making it centralized, as everyone is going to have his working copy, but there needs to be a focal point to pipeline the project changes. So let’s go and create a repository on Github.
+
+create a new git repository(or push existing also)
+
+git remote add origin [repository’s path  bsr@github.com/bsr/]
+git push origin master
+remote repository we created to our local one under the name of origin.
+6. git clone
+your code is pushed to a remote repository, anyone with access/permissions to your repo can download the code and start editing it.
+download the repository with the full history of the project and nearly every change that was ever made, 
+git clone 
+
+git clone "path repository"
+Just find the repository you want to clone (for ex. On Github), click the green “Clone or download” button and you can see the option to download the zip or copy the Url and replace it in the command “
+
+git clone "path repository"
+repo download and clone options
+
+7. git merge and git fetch
+There are two ways that we can bring this change into our main project and we’ll go through both. The first is through the git merge command, which is going bring the changes and merge them into our files.
+
+Git allows us to visit the state of our files at the time of a previous commit. If you want to head to a previous commit without making a change you can run the git checkout "commit hash" command and pass the appropriate commit hash. You can view all previous commits with hashes using git log command.
+
+You can also find these by pressing on the commits tab on your repository on GitHub. And It will look something like this.
+
+git checkout to particular commit,Now we will run the below command.
+
+git reset --hard "commit hash"
+This forces our remote repository projects files to be the state they were in, when we made that particular commit, regardless of what we have now.
+
+Git reset output
+
+When we do so, we’ll receive the message that we are one commit behind. Meaning git counted this action as another commit and now you have some changes in your remote repository.
+
+Git status output when a branch is behind some commits from it's remote
+
+Let’s now fetch these changes without merging them into the directory and selectively doing the merge by ourselves. To do so, we’ll run the git fetch command as follows:
+
+ git fetch --all
+git fetch command
+
+This will fetch all the commits that we don’t currently have, but without merging them or affecting our workflow. So let’s actually add a few words in our text file, I’ll add the words ‘we made’ after the word ‘project’ on the third line.
+
+I’ll then add and commit these changes. Now our local repo has a commit that our remote doesn’t have, and our remote has a commit that our local doesn’t have. What to do then?
+
+Well, let’s try to use the git merge command and see what happens. We get the message that we have a “Conflict”, the automatic merge didn’t work and we need to fix these conflicts by ourselves.
+
+git merge command
+
+On my VS code, I can clearly see these conflicts and the actions I can take to resolve them. If you’re not using VS code, do not worry, most editors support conflict management.
+
+visual studio code comparison during a merge conflict
+
+I have 4 options, ‘Accept Current Change’, ‘Accept Incoming Changes’, ‘Accept Both Changes’ and ‘Compare Changes’.
+
+I will choose to accept both changes to showcase the different options, but of course, in this situation, you should choose the most appropriate. Now, this is how the text file looks like:
+
+project file after accepting to keep both changes during a merge conflict
+
+At this stage, what you ideally do is click on either “Accept Current Change” or “Accept Incoming Change”, depending on what changes you want to keep and what you want to discard.
+
+Once done, we’ll finalize the merge by committing our changes.
+
+8. Branches
+We’ve mentioned branches a lot so far, and it’s about time we explain what branches are. Branches are one of the most powerful features in Git.
+
+There are many use cases for branches, for example, if you’re working on software with different releases, the development of the different versions shouldn’t be going on the same pipeline. Branching is basically diverging the flow of changes in a certain direction.
+
+Another more general example is a production, testing, and development branches, production would only contain stable releases, certain development commits would have to diverge to testing before they’re merged with production and so forth. It’s a much-needed practice in the software world.
+
+The reason why Git is so good at branching is that it’s using snapshots and calculating differences, the process of creating a branch then becomes much simpler and faster than it is in other systems like SVN where such operation is a headache.
+
+So let’s start a new branch on our project, we can simply do so by using the git branch command which will go ahead and create a new branch with the name we choose.
+
+We can then enter that branch by using the following command:
+
+git checkout to a particular branch
+
+git checkout "branch name"
+I’ll go ahead and edit branch ‘testing’ with a change in the text file as follows, and I’ll commit this change. You can run git commit -a to commit all the unstaged files and commit them with the same command.
+
+Here you can find some best practices for branching: Git Branching Model
+
+9. Pull Requests
+Pull requests are used to discuss some piece of code with the other collaborators before finally merging the code. They can be useful if you are contributing to an open source project or have some people working remotely. You can specify which branch you'd like to merge your changes into when you create your pull request.
+
+To create a pull request, first, you need to create a new branch from the branch you wish to merge into. Next, you need to commit some changes and push this branch to Github.
+You will find the “New pull request” button on the repository page. On clicking it, Github will show you the following prompt:
+
+Git UI for pull request
+
+Here, you can select the branches and leave a comment (optional). After a pull request has been created, Github gives you (the project owner) the option to merge or close the pull request. 
+If an automatic merge cannot be performed online, you will need to take a pull and merge them locally. Github has a “command line instructions” button to help you out.
+
+
